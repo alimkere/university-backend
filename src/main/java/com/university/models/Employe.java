@@ -59,12 +59,24 @@ public class Employe extends AuditModel{
 	@Column(name = "fonction")
 	private String function;
 	
+	//optional=false is a runtime instruction
 	 @ManyToOne(fetch = FetchType.LAZY, optional = false)
-	    @JoinColumn(name = "department_id", nullable = false)
-	    @OnDelete(action = OnDeleteAction.CASCADE)
-	    @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-	    @JsonIdentityReference(alwaysAsId=true)
-	    @JsonProperty("department_id")
+	 
+	//nullable=false is an instruction for generating the schema
+	 @JoinColumn(name = "department_id", nullable = false)
+	 
+	//OnDelete decides whether deleting an entry from database will delete the rows represented by joined sub class or not
+	  @OnDelete(action = OnDeleteAction.CASCADE)
+	 
+	//JsonIdentityInfo is used to indicate that object identity will be used during serialization/de-serialization
+   //Or it is used when objects have parent child relationship
+	  @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+	 
+	//JsonIdentityReference annotation can be used along with @JsonIdentityInfo to serialize Object by its id instead of as full POJO
+	  @JsonIdentityReference(alwaysAsId=true)
+	 
+	//This annotation can be used on fields or getters or setters. It permit to rename properties
+	  @JsonProperty("department_id")
 	 private Department department;
 
 }
