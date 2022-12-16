@@ -9,9 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +22,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Admission {
+public class Admission extends AuditModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -52,13 +54,4 @@ public class Admission {
 	
 	@Column(name = "session")
 	private String session;
-	
-	@Column(name = "deposite_date")
-    @CreationTimestamp
-    private Date depositeDate;
-
-    @Column(name = "updated_date")
-    @UpdateTimestamp
-    private Date updatedDate;
-
 }
