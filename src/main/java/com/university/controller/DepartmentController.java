@@ -4,6 +4,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import com.university.models.Department;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -28,11 +29,22 @@ public class DepartmentController {
 	@Autowired
 	private DepartmentRepository departmentRepository;
 
+	//Get all departments
 	@GetMapping("/departments")
-	public List<Department> listDepartments(){
-		return departmentRepository.findAll();
+    public ResponseEntity < List<Department> > getAllDepartments(){
+		
+		List<Department> listDepartments = departmentRepository.findAll();
+		
+		if(listDepartments.size() == 0) {
+		
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		
+		}
+		
+		return new ResponseEntity<>(listDepartments,HttpStatus.OK);
 	}
 	
+	//Get a department by id
 	@GetMapping("/departments/{departmentId}")
 	public ResponseEntity<Department> getDepartmentById(@PathVariable Long departmentId){
 		Department department = departmentRepository.findById(departmentId).
@@ -42,20 +54,31 @@ public class DepartmentController {
 		
 	}
 	
+	//Create a department
     @PostMapping("/departments")
-    public Department createDepartment(@Valid @RequestBody Department department) {
-        return departmentRepository.save(department);
-    }
-
+    public ResponseEntity<Department> createDepartment(@Valid @RequestBody Department department) {
+		try {
+			Department _department = departmentRepository.save(department);
+		  return new ResponseEntity<>(_department, HttpStatus.CREATED);
+		} catch (Exception e) {
+		  return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		}
+    
+    //Update a department
     @PutMapping("/departments/{departmentId}")
-    public Department updateDepartment(@PathVariable Long departmentId, @Valid @RequestBody Department departmentRequest) {
-        return departmentRepository.findById(departmentId).map(department -> {
-        	department.setName(departmentRequest.getName());
-            return departmentRepository.save(department);
-        }).orElseThrow(() -> new ResourceNotFoundException("DepartmentId " + departmentId + " not found"));
-    }
+    public ResponseEntity<Department> updateDepartment(@PathVariable Long departmentId, @Valid  @RequestBody Department department) {
+	    Optional<Department> departmentData = departmentRepository.findById(departmentId);
+	    if (departmentData.isPresent()) {
+	    	Department _department = departmentData.get();
+	    	_department.setName(department.getName());
+	      return new ResponseEntity<>(departmentRepository.save(_department), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	 }
 
-
+    //Delete a department
     @DeleteMapping("/departments/{departmentId}")
     public ResponseEntity<?> deleteDepartment(@PathVariable Long departmentId) {
         return departmentRepository.findById(departmentId).map(department -> {
