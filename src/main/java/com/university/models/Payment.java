@@ -16,7 +16,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "registration")
+@Table(name = "payment")
 @Getter
 @Setter
 @NoArgsConstructor

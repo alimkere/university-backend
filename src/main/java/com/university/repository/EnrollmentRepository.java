@@ -3,9 +3,9 @@ package com.university.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import com.university.models.Document;
+import com.university.models.Enrollment;
 
 @RepositoryRestResource
-public interface DocumentRepository extends JpaRepository<Document, Long>{
+public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>{
 
 }

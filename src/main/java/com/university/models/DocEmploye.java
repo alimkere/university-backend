@@ -1,6 +1,5 @@
 package com.university.models;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,14 +24,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "language")
+@Table(name = "document_employe")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Language extends AuditModel{
-	
+public class DocEmploye extends AuditModel{	
 	/**
 	 * 
 	 */
@@ -46,18 +44,16 @@ public class Language extends AuditModel{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "type")
-	private String type;
-	
-	@Column(name = "level")
-	private String level;
+	@Column(name = "file")
+	private String file;
 	
 	@ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "employe_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 	@JsonIdentityReference(alwaysAsId=true)
-	@JsonProperty("student_id")
-    private Student student;
-
+	@JsonProperty("employe_id")
+    private Employe employe;
+	
 }
+

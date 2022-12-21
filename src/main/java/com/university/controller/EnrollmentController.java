@@ -1,5 +1,5 @@
 package com.university.controller;
 
-public class RegistrationController {
+public class EnrollmentController {
 
 }

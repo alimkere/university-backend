@@ -1,6 +1,5 @@
 package com.university.models;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,13 +24,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "language")
+@Table(name = "document_student")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Language extends AuditModel{
+public class DocStudent extends AuditModel{
 	
 	/**
 	 * 
@@ -46,11 +45,8 @@ public class Language extends AuditModel{
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "type")
-	private String type;
-	
-	@Column(name = "level")
-	private String level;
+	@Column(name = "file")
+	private String file;
 	
 	@ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
@@ -59,5 +55,5 @@ public class Language extends AuditModel{
 	@JsonIdentityReference(alwaysAsId=true)
 	@JsonProperty("student_id")
     private Student student;
-
+	
 }

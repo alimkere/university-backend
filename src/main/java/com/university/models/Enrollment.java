@@ -14,13 +14,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "registration")
+@Table(name = "enrollment")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Registration extends AuditModel{
+public class Enrollment extends AuditModel{
 	
 	/**
 	 * 
