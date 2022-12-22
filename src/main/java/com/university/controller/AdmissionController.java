@@ -72,7 +72,7 @@ public class AdmissionController {
 	        return admissionRepository.findById(admissionId).map(admission -> {
 	            admission.setMainChoice(admissionRequest.getMainChoice());
 	            admission.setSecondChoice(admissionRequest.getSecondChoice());
-	            admission.setAppFeesDate(admissionRequest.getAppFeesDate());
+	            admission.setAppFeesPayDate(admissionRequest.getAppFeesPayDate());
 	            admission.setAppFees(admissionRequest.getAppFees());
 	            admission.setGraduationPlace(admissionRequest.getGraduationPlace());
 	            admission.setAppFeesProof(admissionRequest.getAppFeesProof());

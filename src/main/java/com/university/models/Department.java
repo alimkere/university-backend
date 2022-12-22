@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +37,8 @@ public class Department extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
-	@Column(name = "name")
+	@NotNull
+	@Column(name = "name",unique = true)
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "department")

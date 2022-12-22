@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -41,10 +42,12 @@ public class DocEmploye extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
-	@Column(name = "name")
+	@NotNull
+	@Column(name = "name",unique = true)
 	private String name;
 	
-	@Column(name = "file")
+	@NotNull
+	@Column(name = "file", unique = true)
 	private String file;
 	
 	@ManyToOne

@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -43,12 +44,15 @@ public class Language extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
+	@NotNull
 	@Column(name = "name")
 	private String name;
 	
+	@NotNull
 	@Column(name = "type")
 	private String type;
 	
+	@NotNull
 	@Column(name = "level")
 	private String level;
 	

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -44,24 +45,31 @@ public class Admission extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
+	@NotNull
 	@Column(name = "main_choice")
 	private String mainChoice;
-	
+
+	@NotNull
 	@Column(name = "second_choice")
 	private String secondChoice;
 	
-	@Column(name = "app_fees_date")
-	private Date appFeesDate ;
+	@NotNull
+	@Column(name = "app_fees_pay_date")
+	private Date appFeesPayDate ;
 	
+	@NotNull
 	@Column(name = "app_fees")
 	private double appFees ;
 	
+	@NotNull
 	@Column(name = "graduation_place")
 	private String graduationPlace ;
 	
+	@NotNull
 	@Column(name = "app_fees_proof")
 	private String appFeesProof;
 	
+	@NotNull
 	@Column(name = "session")
 	private String session;
 	

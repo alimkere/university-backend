@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -44,16 +45,20 @@ public class Payment extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
+	@NotNull
 	@Column(name = "payment_date")
 	private Date paymentDate;
 	
+	@NotNull
 	@Column(name = "description")
 	private String description;
 
+	@NotNull
 	@Column(name = "amount")
 	private double amount;
 	
-	@Column(name = "transaction_number")
+	@NotNull
+	@Column(name = "transaction_number", unique = true)
 	private String transactionNumber;
 
 	@OneToOne

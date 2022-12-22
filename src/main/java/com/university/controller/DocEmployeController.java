@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.university.models.DocEmploye;
-import com.university.models.DocStudent;
 import com.university.repository.DocEmployeRepository;
 import com.university.repository.EmployeRepository;
 
@@ -66,7 +65,7 @@ public class DocEmployeController {
     @PutMapping("/employes/{employeId}/docemployes/{documentId}")
     public DocEmploye updateDocumentFromEmploye(@PathVariable  Long employeId,
                                  @PathVariable  Long documentId,
-                                 @Valid @RequestBody DocStudent documentRequest) {
+                                 @Valid @RequestBody DocEmploye documentRequest) {
         if(!employeRepository.existsById(employeId)) {
             throw new ResourceNotFoundException("EmployeId " + employeId + " not found");
         }
@@ -77,6 +76,7 @@ public class DocEmployeController {
             return docEmployeRepository.save(docEmploye);
         }).orElseThrow(() -> new ResourceNotFoundException("Employe DocumentId " + documentId + "not found"));
     }
+  
     
     @DeleteMapping("/employes/{employeId}/docemployes/{documentId}")
     public ResponseEntity<?> deleteDocumentFromEmploye(@PathVariable Long employeId,

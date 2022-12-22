@@ -75,6 +75,7 @@ public class DiplomaController {
             diploma.setEndDate(diplomaRequest.getEndDate());
             diploma.setTitle(diplomaRequest.getTitle());
             diploma.setFile(diplomaRequest.getFile());
+            diploma.setSerie(diplomaRequest.getSerie());
             diploma.setMention(diplomaRequest.getMention()); 
             diploma.setSchool(diplomaRequest.getSchool()); 
             diploma.setCountry(diplomaRequest.getCountry()); 

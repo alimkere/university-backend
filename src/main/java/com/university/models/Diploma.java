@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -44,24 +45,35 @@ public class Diploma extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
+	@NotNull
 	@Column(name = "begin_date")
 	private Date beginDate;
 	
+	@NotNull
 	@Column(name = "end_date")
 	private Date endDate;
 	
+	@NotNull
 	@Column(name = "title")
 	private String title;
 	
-	@Column(name = "file")
+	@NotNull
+	@Column(name = "serie")
+	private String serie;
+	
+	@NotNull
+	@Column(name = "file", unique = true)
 	private String file;
 	
+	@NotNull
 	@Column(name = "mention")
 	private String mention;
 	
+	@NotNull
 	@Column(name = "school")
 	private String school;
 	
+	@NotNull
 	@Column(name = "country")
 	private String country;
 	

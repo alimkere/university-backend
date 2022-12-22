@@ -80,7 +80,7 @@ public class EmployeController {
             employe.setLastName(employeRequest.getLastName());
             employe.setEmail(employeRequest.getEmail());
             employe.setPhone(employeRequest.getPhone());
-            employe.setFunction(employeRequest.getFunction());
+            employe.setPoste(employeRequest.getPoste());
             return employeRepository.save(employe);
         }).orElseThrow(() -> new ResourceNotFoundException("EmployeId " + employeId + "not found"));
     }
