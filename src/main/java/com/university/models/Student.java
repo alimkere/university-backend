@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -87,5 +88,12 @@ public class Student extends AuditModel{
     
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Language> languages;
+    
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Admission> admissions;
+    
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Enrollment enrollment;
+    
 
 }
