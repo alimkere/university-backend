@@ -3,6 +3,7 @@ package com.university.controller;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+
+import com.university.models.Department;
 import com.university.models.Employe;
+import com.university.models.Student;
 import com.university.repository.DepartmentRepository;
 import com.university.repository.EmployeRepository;
 
@@ -83,6 +88,43 @@ public class EmployeController {
             employe.setPoste(employeRequest.getPoste());
             return employeRepository.save(employe);
         }).orElseThrow(() -> new ResourceNotFoundException("EmployeId " + employeId + "not found"));
+    }
+    
+    //Update a property of an employe
+    @PatchMapping("/departments/{departmentId}/employes/{employeId}")
+    public ResponseEntity<Employe> patchEmploye(@PathVariable (value = "departmentId") Long departmentId,
+                                 @PathVariable (value = "employeId") Long employeId,
+                                 @RequestBody Employe patch) {
+        if(!departmentRepository.existsById(departmentId)) {
+            throw new ResourceNotFoundException("DepartmentId " + departmentId + " not found");
+        }
+        
+        Employe employe = employeRepository.findById(employeId).orElse(null);
+        if (employe == null) {
+          return ResponseEntity.notFound().build();
+        }
+        employe = applyPatch(employe, patch);
+        employe = employeRepository.save(employe);
+        return ResponseEntity.ok(employe);
+      }
+
+    private Employe applyPatch(Employe employe, Employe patch) {
+        	if (patch.getFirstName() != null) {
+      	      employe.setFirstName(patch.getFirstName());
+      	    }
+      	if (patch.getLastName() != null) {
+    	      employe.setLastName(patch.getLastName());
+    	    }
+      	if (patch.getEmail() != null) {
+  	      employe.setEmail(patch.getEmail());
+  	    }
+      	if (patch.getPhone() != null) {
+  	      employe.setPhone(patch.getPhone());
+  	    }
+      	if (patch.getPoste() != null) {
+  	      employe.setPoste(patch.getPoste());
+  	    }
+      	return employe;
     }
     
     //Delete an employe by departmentId
