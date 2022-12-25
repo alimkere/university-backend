@@ -14,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -49,23 +49,23 @@ public class Employe extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "first_name")
 	private String firstName;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "email",unique = true)
 	private String email;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "phone", unique = true)
 	private String phone;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "poste")
 	private String poste;
 	

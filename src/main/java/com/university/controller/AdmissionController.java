@@ -32,13 +32,15 @@ public class AdmissionController {
 	@Autowired
 	private AdmissionRepository admissionRepository;
 	
+	//Get all admissions
 	@GetMapping("/admissions")
 	public List<Admission> listAdmissions(){
 		return admissionRepository.findAll();
 	}
 	
+	//Get an admission by admissionId
 	 @GetMapping("/admissions/{admissionId}")
-	   	public ResponseEntity<Admission> getLanguageById(@PathVariable Long admissionId){
+	   	public ResponseEntity<Admission> getAdmissionById(@PathVariable Long admissionId){
 		 Admission admission = admissionRepository.findById(admissionId).
 	   		orElseThrow(()-> new ResourceNotFoundException("The Admission with id "+ admissionId +" doesn't exit in the database !!"));
 	   		
@@ -46,12 +48,14 @@ public class AdmissionController {
 	   		
 	   	}
 	 
+	 //Get all admissions by student id
 	 @GetMapping("/students/{studentId}/admissions")
 	    public Page<Admission> getAllAdmisionsByStudentId(@PathVariable  Long studentId,
 	                                                Pageable pageable) {
 	        return admissionRepository.findByStudentId(studentId, pageable);
 	    }
 	 
+	 //Apply for an admission
 	 @PostMapping("/students/{studentId}/admissions")
 	    public Admission createAdmission(@PathVariable  Long studentId,
 	                                 @Valid @RequestBody Admission admission) {
@@ -61,6 +65,7 @@ public class AdmissionController {
 	        }).orElseThrow(() -> new ResourceNotFoundException("StudentId " + studentId + " not found"));
 	    }
 	    
+	 //Update an admission by using studentId and admissionId
 	 @PutMapping("/students/{studentId}/admissions/{admissionId}")
 	    public Admission updateAdmission(@PathVariable  Long studentId,
 	                                 @PathVariable  Long admissionId,
@@ -81,6 +86,7 @@ public class AdmissionController {
 	        }).orElseThrow(() -> new ResourceNotFoundException("AdmissionId " + admissionId + "not found"));
 	    }
 	 
+	 //Delete an admission by using studentId and admissionId
 	 @DeleteMapping("/students/{studentId}/admissions/{admissionId}")
 	    public ResponseEntity<?> deleteAdmission(@PathVariable Long studentId,
 	                              @PathVariable Long admissionId) {

@@ -33,11 +33,13 @@ public class EnrollmentController {
 	@Autowired
 	private EnrollmentRepository enrollmentRepository;
 	
+	//Get all enrollments
 	@GetMapping("/enrollments")
 	public List<Enrollment> listEnrollments(){
 		return enrollmentRepository.findAll();
 	}
     
+	//Get an enrollment by enrollmentId
     @GetMapping("/enrollments/{enrollmentId}")
    	public ResponseEntity<Enrollment> getEnrollmentById(@PathVariable Long enrollmentId){
     	Enrollment enrollment = enrollmentRepository.findById(enrollmentId).
@@ -47,12 +49,14 @@ public class EnrollmentController {
    		
    	}
     
+    //Get all enrollments using studentId
     @GetMapping("/students/{studentId}/enrollments")
     public Page<Enrollment> getAllEnrollmentsByStudentId(@PathVariable  Long studentId,
                                                 Pageable pageable) {
         return enrollmentRepository.findByStudentId(studentId, pageable);
     }
     
+    //Add an enrollment using studentId
     @PostMapping("/students/{studentId}/enrollments")
     public Enrollment createEnrollment(@PathVariable  Long studentId,
                                  @Valid @RequestBody Enrollment enrollment) {
@@ -62,6 +66,7 @@ public class EnrollmentController {
         }).orElseThrow(() -> new ResourceNotFoundException("StudentId " + studentId + " not found"));
     }
     
+    //Update an enrollment using studentId
     @PutMapping("/students/{studentId}/enrollments/{enrollmentId}")
     public Enrollment updateEnrollment(@PathVariable  Long studentId,
                                  @PathVariable  Long enrollmentId,
@@ -76,6 +81,7 @@ public class EnrollmentController {
         }).orElseThrow(() -> new ResourceNotFoundException("EnrollmentId " + enrollmentId + "not found"));
     }
     
+    //Delete an enrollment using studentId
     @DeleteMapping("/students/{studentId}/enrollments/{enrollmentId}")
     public ResponseEntity<?> deleteEnrollment(@PathVariable (value = "studentId") Long studentId,
                               @PathVariable Long enrollmentId) {

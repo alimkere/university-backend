@@ -25,7 +25,6 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import com.university.models.Department;
 import com.university.models.Employe;
-import com.university.models.Student;
 import com.university.repository.DepartmentRepository;
 import com.university.repository.EmployeRepository;
 
@@ -95,38 +94,39 @@ public class EmployeController {
     public ResponseEntity<Employe> patchEmploye(@PathVariable (value = "departmentId") Long departmentId,
                                  @PathVariable (value = "employeId") Long employeId,
                                  @RequestBody Employe patch) {
-        if(!departmentRepository.existsById(departmentId)) {
+    	Optional<Department> optionalDepartment = departmentRepository.findById(departmentId);
+        if (!optionalDepartment.isPresent()) {
             throw new ResourceNotFoundException("DepartmentId " + departmentId + " not found");
         }
-        
-        Employe employe = employeRepository.findById(employeId).orElse(null);
-        if (employe == null) {
-          return ResponseEntity.notFound().build();
+        Optional<Employe> optionalEmploye = employeRepository.findById(employeId);
+        if (!optionalEmploye.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
+        Employe employe = optionalEmploye.get();
         employe = applyPatch(employe, patch);
         employe = employeRepository.save(employe);
         return ResponseEntity.ok(employe);
       }
 
     private Employe applyPatch(Employe employe, Employe patch) {
-        	if (patch.getFirstName() != null) {
-      	      employe.setFirstName(patch.getFirstName());
-      	    }
-      	if (patch.getLastName() != null) {
-    	      employe.setLastName(patch.getLastName());
-    	    }
-      	if (patch.getEmail() != null) {
-  	      employe.setEmail(patch.getEmail());
-  	    }
-      	if (patch.getPhone() != null) {
-  	      employe.setPhone(patch.getPhone());
-  	    }
-      	if (patch.getPoste() != null) {
-  	      employe.setPoste(patch.getPoste());
-  	    }
-      	return employe;
+        if (patch.getFirstName() != null) {
+            employe.setFirstName(patch.getFirstName());
+        }
+        if (patch.getLastName() != null) {
+            employe.setLastName(patch.getLastName());
+        }
+        if (patch.getEmail() != null) {
+            employe.setEmail(patch.getEmail());
+        }
+        if (patch.getPhone() != null) {
+            employe.setPhone(patch.getPhone());
+        }
+        if (patch.getPoste() != null) {
+            employe.setPoste(patch.getPoste());
+        }
+        return employe;
     }
-    
+   
     //Delete an employe by departmentId
     @DeleteMapping("/departments/{departmentId}/employes/{employeId}")
     public ResponseEntity<?> deleteEmploye(@PathVariable (value = "departmentId") Long departmentId,

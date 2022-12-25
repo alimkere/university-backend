@@ -1,6 +1,7 @@
 package com.university.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.university.models.Language;
+import com.university.models.Student;
 import com.university.repository.LanguageRepository;
 import com.university.repository.StudentRepository;
 
@@ -33,11 +36,13 @@ public class LanguageController {
 	@Autowired
 	private LanguageRepository languageRepository;
 	
+	//Get all languages
     @GetMapping("/languages")
 	public List<Language> listLanguages(){
 		return languageRepository.findAll();
 	}
     
+    //Get a language by languageId
     @GetMapping("/languages/{languageId}")
    	public ResponseEntity<Language> getLanguageById(@PathVariable Long languageId){
    		Language language = languageRepository.findById(languageId).
@@ -47,12 +52,14 @@ public class LanguageController {
    		
    	}
     
+    //Get all languages using studentId
     @GetMapping("/students/{studentId}/languages")
     public Page<Language> getAllLanguagesByStudentId(@PathVariable  Long studentId,
                                                 Pageable pageable) {
         return languageRepository.findByStudentId(studentId, pageable);
     }
     
+    //Add a language
     @PostMapping("/students/{studentId}/languages")
     public Language createLanguage(@PathVariable  Long studentId,
                                  @Valid @RequestBody Language language) {
@@ -62,6 +69,7 @@ public class LanguageController {
         }).orElseThrow(() -> new ResourceNotFoundException("StudentId " + studentId + " not found"));
     }
     
+    //Update a language by using studentId
     @PutMapping("/students/{studentId}/languages/{languageId}")
     public Language updateLanguage(@PathVariable  Long studentId,
                                  @PathVariable  Long languageId,
@@ -77,7 +85,43 @@ public class LanguageController {
             return languageRepository.save(language);
         }).orElseThrow(() -> new ResourceNotFoundException("LanguageId " + languageId + "not found"));
     }
+   
+  //Patch a Student's language by using languageId
+    @PatchMapping("/students/{studentId}/languages/{languageId}")
+    public ResponseEntity<Language> patchLanguage(@PathVariable Long studentId,
+                                 @PathVariable  Long languageId,
+                                 @RequestBody 	Language patch) {
+    	Optional<Student> optionalStudent = studentRepository.findById(studentId);
+        if (!optionalStudent.isPresent()) {
+            throw new ResourceNotFoundException("StudentId " + studentId + " not found");
+        }
+        Optional<Language> optionalLanguage = languageRepository.findById(languageId);
+        if (!optionalLanguage.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        Language language = optionalLanguage.get();
+        language = applyPatch(language, patch);
+        language = languageRepository.save(language);
+        return ResponseEntity.ok(language);
+      }
+
+    private Language applyPatch(Language language, Language patch) {
+        if (patch.getType() != null) {
+        	language.setType(patch.getType());
+        }
+        if (patch.getLevel() != null) {
+        	language.setLevel(patch.getLevel());
+        }
+        if (patch.getName() != null) {
+        	language.setName(patch.getName());
+        }
+        
+        return language;
+    }
+
+
     
+    //Delete a language using langageId
     @DeleteMapping("/students/{studentId}/languages/{languageId}")
     public ResponseEntity<?> deleteLanguage(@PathVariable (value = "studentId") Long studentId,
                               @PathVariable Long languageId) {

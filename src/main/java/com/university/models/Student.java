@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -39,19 +40,19 @@ public class Student extends AuditModel{
     @Column(name = "id")
     private Long id;
 
-	@NotNull
+	@NotBlank
     @Column(name = "first_name")
     private String firstName;
     
-	@NotNull
+	@NotBlank
     @Column(name = "last_name")
     private String lastName ;
     
-	@NotNull
+	@NotBlank
     @Column(name = "cin", unique = true)
     private String cin;
     
-	@NotNull
+	@NotBlank
     @Column(name = "passport", unique = true)
     private String passport;
     
@@ -59,39 +60,43 @@ public class Student extends AuditModel{
     @Column(name = "birth_day")
     private Date birthDay;
     
-	@NotNull
+	@NotBlank
     @Column(name = "picture")
     private String picture;
     
-	@NotNull
+	@NotBlank
     @Column(name = "phone",unique = true)
     private String phone;
+	
+	@NotBlank
+    @Column(name = "email",unique = true)
+    private String email;
     
-	@NotNull
+	@NotBlank
     @Column(name = "adress")
     private String adress;
     
-	@NotNull
+	@NotBlank
     @Column(name = "zip_code", unique = true)
     private String zipCode;
     
-	@NotNull
+	@NotBlank
     @Column(name = "country")
     private String country;
     
-	@NotNull
+	@NotBlank
     @Column(name = "town")
     private String town;
 
-	@NotNull
+	@NotBlank
     @Column(name = "study_level")
     private String studyLevel;
     
-	@NotNull
+	@NotBlank
     @Column(name = "status")
     private String status;
     
-	@NotNull
+	@NotBlank
     @Column(name = "sex")
     private String sex;
     

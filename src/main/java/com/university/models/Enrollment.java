@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -45,7 +45,7 @@ public class Enrollment extends AuditModel{
 	@Column(name = "id")
 	private long id;
 	
-	@NotNull
+	@NotBlank
 	@Column(name = "session")
 	private String session;
 	

@@ -54,6 +54,7 @@ public class StudentController {
             student.setBirthDay(studentRequest.getBirthDay());
             student.setPicture(studentRequest.getPicture());
             student.setPhone(studentRequest.getPhone());
+            student.setEmail(studentRequest.getEmail());
             student.setAdress(studentRequest.getAdress());
             student.setZipCode(studentRequest.getZipCode());
             student.setCountry(studentRequest.getCountry());
@@ -101,6 +102,9 @@ public class StudentController {
     	if (patch.getPhone() != null) {
   	      student.setPhone(patch.getPhone());
   	    }
+    	if (patch.getEmail() != null) {
+    	      student.setEmail(patch.getEmail());
+    	    }
     	if (patch.getAdress() != null) {
   	      student.setAdress(patch.getAdress());
   	    }

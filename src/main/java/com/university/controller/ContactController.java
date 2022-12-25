@@ -25,21 +25,25 @@ public class ContactController {
 	@Autowired
 	private ContactRepository contactRepository;
 	
+	//Get all contacts
 	@GetMapping("/contacts")
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
     }
 	
+	//Get a contact by id
 	@GetMapping("/contacts/{contactId}")
     public Contact getContactById(@PathVariable Long contactId) {
         return contactRepository.findById(contactId).orElseThrow(() -> new ResourceNotFoundException("Contact not found with id " + contactId));
     }
 	
+	//Create a contact
 	@PostMapping("/contacts")
     public Contact createContact(@Valid @RequestBody Contact contact) {
         return contactRepository.save(contact);
     }
 	
+	//Delete a contact
 	@DeleteMapping("/contacts/{contactId}")
     public ResponseEntity<?> deleteContact(@PathVariable Long contactId) {
         return contactRepository.findById(contactId).map(contact -> {
