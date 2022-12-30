@@ -31,12 +31,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Department extends AuditModel{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Department{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
