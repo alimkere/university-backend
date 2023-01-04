@@ -58,6 +58,10 @@ public class Employe{
 	private String phone;
 	
 	@NotBlank
+	@Column(name = "picture")
+	private String picture;
+	
+	@NotBlank
 	@Column(name = "poste")
 	private String poste;
 	
