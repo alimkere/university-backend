@@ -36,17 +36,17 @@ public class Contact{
 	private long id;
 	
 	@NotBlank
-	@Column(name = "first_name")
-	private String firstName;
-	
-	@NotBlank
-	@Column(name = "last_name")
-	private String lastName;
+	@Column(name = "name")
+	private String name;
 	
 	@NotBlank
 	@Column(name = "email",unique = true)
 	private String email;
 	
+	@NotBlank
+	@Column(name = "message")
+	private String message;
+	 
 	@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
 	@CreationTimestamp

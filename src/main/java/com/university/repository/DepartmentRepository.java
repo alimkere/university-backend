@@ -11,3 +11,4 @@ import com.university.models.Department;
 public interface DepartmentRepository  extends JpaRepository<Department, Long>{
 
 }
+
