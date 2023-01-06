@@ -36,7 +36,7 @@ public class Department{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private long id;
+	private Long id;
 	
 	@NotBlank
 	@Column(name = "name",unique = true)
